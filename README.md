@@ -1,1 +1,766 @@
 # soul-ties
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breaking Soul Ties — Dana Scott</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --violet-deep:#2E1152;
+    --violet-mid:#4B1E85;
+    --purple:#7C3AED;
+    --yellow:#FFC93C;
+    --yellow-soft:#FFE8A8;
+    --blue:#2447F0;
+    --blue-soft:#DCE4FF;
+    --cream:#FFF8EC;
+    --ink:#221533;
+    --ink-soft:#5A4C6E;
+    --line:#E7DCF4;
+    --danger:#B23A48;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(255,201,60,0.16), transparent 45%),
+      radial-gradient(circle at 85% 92%, rgba(36,71,240,0.18), transparent 50%),
+      var(--violet-deep);
+    font-family:'Literata', serif;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:28px 16px 60px;
+  }
+  .brand{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--yellow);
+    margin-bottom:14px;
+  }
+  .book{
+    width:100%;
+    max-width:660px;
+    background:var(--cream);
+    border-radius:22px;
+    box-shadow:0 30px 70px rgba(15,4,36,0.45), 0 2px 0 rgba(255,255,255,0.4) inset;
+    overflow:hidden;
+    position:relative;
+    min-height:560px;
+    display:flex;
+    flex-direction:column;
+  }
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 22px;
+    border-bottom:1px solid var(--line);
+    font-family:'Inter',sans-serif;
+    gap:12px;
+  }
+  .progress-wrap{flex:1; display:flex; align-items:center; gap:10px;}
+  .progress-label{font-size:11px; font-weight:600; color:var(--ink-soft); letter-spacing:.04em; white-space:nowrap;}
+  .progress-track{flex:1; height:6px; border-radius:6px; background:var(--line); overflow:hidden;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--purple),var(--blue)); border-radius:6px; transition:width .4s ease;}
+  .resources-link{
+    font-family:'Inter',sans-serif; font-size:11px; font-weight:600; color:var(--purple);
+    text-decoration:none; border:1px solid var(--purple); border-radius:20px; padding:6px 12px;
+    white-space:nowrap; cursor:pointer; background:transparent;
+  }
+  .resources-link:hover{background:var(--purple); color:#fff;}
+  .page{
+    padding:34px 30px 26px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .eyebrow{
+    font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--purple);
+  }
+  h1.title{
+    font-family:'Fraunces',serif; font-weight:900; font-size:clamp(26px,5vw,34px);
+    line-height:1.08; margin:0; color:var(--violet-deep);
+  }
+  .subtitle{font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--ink-soft); margin:-8px 0 0; font-size:16px;}
+  .signature{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--blue);
+  }
+  .verse{
+    background:var(--blue-soft); border-left:4px solid var(--blue); border-radius:10px;
+    padding:14px 16px; font-family:'Fraunces',serif; font-style:italic; color:var(--violet-deep); font-size:15px; line-height:1.5;
+  }
+  .verse .ref{display:block; margin-top:6px; font-style:normal; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:.06em; color:var(--blue);}
+  .body-text{font-size:15.5px; line-height:1.72; color:var(--ink);}
+  .body-text + .body-text{margin-top:-8px;}
+  .prompt{display:flex; flex-direction:column; gap:8px;}
+  .prompt label{font-family:'Inter',sans-serif; font-weight:600; font-size:14px; color:var(--violet-deep); line-height:1.4;}
+  .prompt textarea{
+    width:100%; min-height:90px; resize:vertical; border:1.5px solid var(--line); border-radius:12px;
+    padding:12px 14px; font-family:'Literata',serif; font-size:14.5px; color:var(--ink); background:#fff;
+    outline:none; transition:border-color .2s;
+  }
+  .prompt textarea:focus{border-color:var(--purple);}
+  .prayer{
+    background:linear-gradient(135deg,var(--violet-mid),var(--violet-deep)); color:#fff; border-radius:14px;
+    padding:18px 20px; position:relative;
+  }
+  .prayer .tag{font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--yellow); margin-bottom:8px; display:block;}
+  .prayer p{font-family:'Fraunces',serif; font-style:italic; font-size:15px; line-height:1.6; margin:0;}
+  .encouragement{
+    background:var(--yellow-soft); border-radius:14px; padding:16px 18px; font-size:14.5px; line-height:1.65; color:#3B2A05;
+  }
+  .encouragement .tag{font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#8A6400; display:block; margin-bottom:6px;}
+  .quote-block{
+    font-family:'Fraunces',serif; font-weight:600; font-size:19px; line-height:1.4; color:var(--violet-deep);
+    border-left:4px solid var(--yellow); padding-left:16px;
+  }
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-item{display:flex; align-items:flex-start; gap:10px; font-family:'Inter',sans-serif; font-size:13.5px; color:var(--ink); cursor:pointer;}
+  .check-item input{margin-top:2px; width:17px; height:17px; accent-color:var(--purple); cursor:pointer; flex-shrink:0;}
+  .signline{display:flex; gap:12px; flex-wrap:wrap; font-family:'Inter',sans-serif;}
+  .signline input[type=text]{border:none; border-bottom:2px solid var(--violet-deep); background:transparent; font-family:'Fraunces',serif; font-style:italic; font-size:16px; padding:4px 2px; outline:none; flex:1; min-width:140px;}
+  .freedom-gauge{
+    background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:10px;
+  }
+  .freedom-gauge .flabel{font-family:'Inter',sans-serif; font-weight:600; font-size:13px; color:var(--violet-deep);}
+  .dots{display:flex; gap:6px; flex-wrap:wrap;}
+  .dot{
+    width:30px; height:30px; border-radius:50%; border:2px solid var(--line); background:#fff;
+    font-family:'Inter',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.15s;
+  }
+  .dot.active{background:var(--yellow); border-color:var(--yellow); color:var(--violet-deep); transform:scale(1.1);}
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-top:1px solid var(--line);
+    font-family:'Inter',sans-serif; gap:10px;
+  }
+  .navbtn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13px; border:none; border-radius:24px; padding:11px 20px;
+    cursor:pointer; transition:.15s; display:flex; align-items:center; gap:6px;
+  }
+  .navbtn.primary{background:var(--purple); color:#fff;}
+  .navbtn.primary:hover{background:#6528d1;}
+  .navbtn.ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--line);}
+  .navbtn.ghost:hover{border-color:var(--purple); color:var(--purple);}
+  .navbtn:disabled{opacity:.35; cursor:not-allowed;}
+  .saved-note{font-size:11px; color:var(--ink-soft); font-style:italic; text-align:center;}
+
+  /* Disclaimer / cover styling */
+  .gate{
+    display:flex; flex-direction:column; gap:16px; padding:34px 30px 30px; flex:1;
+  }
+  .gate h1{font-family:'Fraunces',serif; font-weight:900; font-size:24px; color:var(--violet-deep); margin:0;}
+  .gate-box{
+    background:var(--blue-soft); border-radius:14px; padding:16px 18px; font-size:14px; line-height:1.65; color:var(--ink);
+  }
+  .gate-box strong{color:var(--violet-deep);}
+  .crisis-box{
+    background:#FBEAEA; border:1.5px solid var(--danger); border-radius:14px; padding:16px 18px; font-size:13.5px; line-height:1.6; color:#5C1A22;
+  }
+  .crisis-box .tag{font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--danger); display:block; margin-bottom:8px;}
+  .crisis-box a{color:var(--danger); font-weight:700;}
+  .gate-check{display:flex; gap:10px; align-items:flex-start; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); cursor:pointer;}
+  .gate-check input{width:18px; height:18px; margin-top:2px; accent-color:var(--purple); cursor:pointer;}
+
+  .cover-wrap{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:40px 30px; gap:14px; background:radial-gradient(circle at 50% 0%, rgba(124,58,237,0.10), transparent 60%);
+  }
+  .cover-tag{font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--purple);}
+  .cover-title{font-family:'Fraunces',serif; font-weight:900; font-size:clamp(30px,7vw,42px); line-height:1.05; color:var(--violet-deep); margin:0;}
+  .cover-sub{font-family:'Fraunces',serif; font-style:italic; font-size:17px; color:var(--ink-soft);}
+  .cover-verse{font-family:'Fraunces',serif; font-style:italic; font-size:14px; color:var(--blue); max-width:420px; margin-top:6px;}
+  .cover-author{font-family:'Inter',sans-serif; font-weight:600; font-size:12px; letter-spacing:.08em; color:var(--ink-soft); margin-top:10px;}
+
+  @media (max-width:480px){
+    .page{padding:26px 18px 20px;}
+    .navbar{padding:14px 16px;}
+    .topbar{padding:12px 16px;}
+  }
+</style>
+</head>
+<body>
+<div class="brand">Dana Scott &middot; Mental Health Advocate</div>
+<div class="book" id="book"></div>
+
+<script>
+/* ---------------- PAGE DATA ---------------- */
+const PAGES = [];
+
+/* 0: SAFETY / DISCLAIMER GATE */
+PAGES.push({type:'gate'});
+
+/* 1: COVER */
+PAGES.push({type:'cover'});
+
+/* 2: WELCOME */
+PAGES.push({
+  type:'content', section:'Welcome', num:null,
+  title:'A Letter to You, From Dana',
+  subtitle:'Before you write a single word — read this first.',
+  blocks:[
+    {t:'body', v:"I did not go to school for this. I have no degree in therapy or psychology. I have never sat behind a clinical desk or held a license that gives me official permission to speak into your life. What I have is something no university can give you — I have been exactly where you are right now. In the pain. In the confusion. In the cycle of loving someone who was not loving me back the way I deserved. Staying when I should have left. Forgiving without seeing change. Carrying wounds that had no names. Suffering — deeply, privately, in the dark — for a very long time."},
+    {t:'body', v:"And then healing. Hard healing. The kind that makes you feel like you are reliving every trauma all over again. The kind that is uncomfortable and inconvenient and nothing like what they show in movies. The real kind. The kind that actually works."},
+    {t:'body', v:"I know what works and what does not — not from a textbook, but from living it. Every page of this journal comes from that place. From my knees. From my tears. From my faith and my failure and my eventual freedom. I am giving you all of it."},
+    {t:'body', v:"This journal is yours now. Write in it honestly. Messily. Completely. Because the more truth you put into these pages, the more freedom comes out. Your lifeline is here. Your bloodline is watching. And baby — it is worth every hard moment of the healing."},
+    {t:'verse', v:'Before I formed you in the womb I knew you, before you were born I set you apart.', ref:'Jeremiah 1:5'},
+    {t:'prompt', id:'w1', label:'What brought you to this journal? What are you carrying right now that you have never been able to put into words?', ph:'I am here because...'},
+    {t:'prompt', id:'w2', label:'What do you need this journal to do for you? What do you want to be different by the time you reach the last page?', ph:'By the time I finish this journal, I want to be...'},
+    {t:'freedomgauge', id:'freedom-start', label:'On a scale of 1–10, how free do you feel right now? You will answer this again at the midpoint and on the last page — and see how far you have come.'},
+    {t:'quote', v:'I am not starting over. I am starting from here. And that is more than enough.'}
+  ]
+});
+
+/* 3: CREDENTIAL */
+PAGES.push({
+  type:'content', section:'Her Credential', num:null,
+  title:'I Am an Overcomer. I Am a Survivor.',
+  subtitle:'No degree in therapy or psychology. No clinical license. No letters after my name.',
+  blocks:[
+    {t:'body', v:'What I have is something no university can give: I went through it. I survived it. I overcame it. And now I am giving everything I learned to you.'},
+    {t:'body', v:'Suffering gave me what no textbook could. Healing taught me what no classroom does. Faith carried me when nothing else would. This journal is the result of all three.'},
+    {t:'verse', v:'They triumphed by the blood of the Lamb and by the word of their testimony.', ref:'Revelation 12:11'},
+    {t:'encouragement', v:"A note before you begin: this journal is lived wisdom and faith encouragement — not a substitute for therapy, medical care, or crisis support. If something you read here brings up more than you can safely carry alone, please reach out to a licensed counselor or the resources listed on the welcome screen. Wanting backup is not a lack of faith. It's wisdom."}
+  ]
+});
+
+/* Helper to add a standard numbered page */
+function addPage(num, title, subtitle, blocks){
+  PAGES.push({type:'content', section:'Page '+num, num:num, title:title, subtitle:subtitle, blocks:blocks, total:30});
+}
+
+addPage(1, "Why You're Here", "You did not end up in this place by accident.", [
+  {t:'body', v:"I remember sitting in a place exactly like where you are right now — feeling stuck in a pattern I could not explain, loving someone in ways that kept costing me myself, and wondering why I could not just stop. Nobody told me about soul ties. Nobody explained that what I was experiencing had a spiritual root. Nobody gave me permission to name what was actually happening. This journal gives you all of that — starting right now on page one."},
+  {t:'verse', v:'The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.', ref:'John 10:10'},
+  {t:'prompt', id:'p1a', label:'What specific situation, relationship, or pattern brought you to this journal? Be completely honest — no one else will read this.', ph:'The situation that brought me here is...'},
+  {t:'prompt', id:'p1b', label:'How long have you been in this cycle? What have you tried that has not worked?', ph:'I have been in this cycle for... I have tried...'},
+  {t:'prompt', id:'p1c', label:'What would it mean for your life if this pattern was broken — completely and permanently?', ph:'If this pattern was completely broken, my life would look like...'},
+  {t:'quote', v:'You are not here because you are weak. You are here because you are finally ready to be free.'},
+  {t:'checklist', id:'chk1', items:[
+    'I have named the specific pattern or relationship I am dealing with',
+    'I am ready to be completely honest — even the parts that embarrass me',
+    'I believe this journal can help me break this cycle'
+  ]}
+]);
+
+addPage(2, "The Pain You've Been Carrying", "You have been strong for too long. Put it down here.", [
+  {t:'body', v:"I carried my pain for years without ever really looking at it. I managed it. I minimized it. I told myself I was fine, that I was over it, that I was stronger than it. But pain you refuse to look at does not go away — it goes underground. And underground pain shapes every relationship, every decision, every moment of your life. This page is where you finally look at it. All of it. Without flinching."},
+  {t:'verse', v:'He heals the brokenhearted and binds up their wounds.', ref:'Psalm 147:3'},
+  {t:'prompt', id:'p2a', label:'What is the pain you have been carrying the longest? Write it out — completely, honestly, without minimizing it.', ph:'The pain I have been carrying the longest is...'},
+  {t:'prompt', id:'p2b', label:'How has this pain changed you? Who were you before you were carrying it?', ph:'Before this pain I was... This pain changed me by...'},
+  {t:'prompt', id:'p2c', label:'What have you never been able to say out loud about this pain? Write it here — this is the safest place it will ever be.', ph:'What I have never been able to say is...'},
+  {t:'encouragement', v:'Writing that was an act of courage. Naming your pain is the first step to releasing it. You are not reliving it to stay there — you are bringing it to the surface so it can finally begin to heal. You are stronger than you know. Keep going.'},
+  {t:'prayer', v:'Lord, I am putting this pain before You. I am not minimizing it anymore, not managing it, not pretending it is not there. I name it. I bring it to You. And I ask You to begin the healing that only You can do. Amen.'}
+]);
+
+addPage(3, "The Soul Tie Nobody Named", "The invisible cord that keeps pulling you back.", [
+  {t:'body', v:"No one ever told me about soul ties. Nobody sat me down and said — when you give yourself to someone emotionally, physically, or spiritually, a bond forms in the unseen realm. And if that person is not healthy for you, that bond becomes a tether that pulls you back even when your mind is screaming to move forward. That is why you can block someone's number and still feel them. That is not weakness. That is a soul tie still intact. And it can be broken. I know — because I broke mine."},
+  {t:'verse', v:'So if the Son sets you free, you will be free indeed.', ref:'John 8:36'},
+  {t:'prompt', id:'p3a', label:'Name the soul tie. Who is it with? When did it form? What moment locked it in?', ph:'The soul tie is with... It formed when...'},
+  {t:'prompt', id:'p3b', label:'What does it feel like in your body when you think about this person or they contact you?', ph:'In my body I feel... When they contact me I notice...'},
+  {t:'prompt', id:'p3c', label:'What piece of yourself did you give away in this relationship that you desperately want back?', ph:'What I gave away and want back is...'},
+  {t:'prompt', id:'p3d', label:'Write the Soul Tie Renunciation in your own words — insert their name and sign it as your declaration.', ph:'In the name of Jesus, I renounce the soul tie between me and _____. I take back every piece of myself I gave away. I release every piece of them I have been holding. I am free. Signed:'},
+  {t:'encouragement', v:'I prayed my renunciation prayer many times before I felt it fully break. Do not be discouraged if the feeling does not change immediately. Every time you declare it, you take back ground. Every single time. Keep declaring. Keep choosing freedom. The bond is breaking.'}
+]);
+
+addPage(4, "Wanted Versus Needed", "This distinction will change every relationship you have for the rest of your life.", [
+  {t:'body', v:"I spent years being needed and calling it love. I was the one with the patience nobody else had, the forgiveness nobody else would offer, the presence nobody else would give. I told myself that meant I was special to them. What it actually meant was that I was useful. Wanted loves you because of who you are. Needed uses you because of what you provide. Once I understood the difference — really understood it — I could never unsee it. And I do not want you to unsee it either."},
+  {t:'verse', v:'You did not choose me, but I chose you and appointed you so that you might go and bear fruit.', ref:'John 15:16'},
+  {t:'prompt', id:'p4a', label:'Looking honestly at the key relationship in your life — are you being wanted or needed? What evidence do you see?', ph:'Based on the evidence I can see, I am being... because...'},
+  {t:'prompt', id:'p4b', label:'When did being needed start to feel like being loved? Trace that moment back as far as you can.', ph:'Being needed started to feel like love when...'},
+  {t:'prompt', id:'p4c', label:'If you could only be in relationships where you are genuinely wanted — what would you have to believe about yourself for that to feel possible?', ph:'To accept only being wanted, I would have to believe that I am...'},
+  {t:'quote', v:'You are worthy of being wanted. Not needed. Not tolerated. Wanted — completely and without condition.'},
+  {t:'encouragement', v:'You are not asking for too much. Every time someone made you feel like your standards were too high — they were wrong. You were not asking for too much. You were in the wrong place. The right love will never make you feel like a burden for needing it.'}
+]);
+
+addPage(5, "Recognizing Manipulation", "Manipulation uses your greatest strengths against you.", [
+  {t:'body', v:"I did not know I was being manipulated for a long time because it did not look the way I expected. It was not loud or aggressive. It was quiet. It came dressed as love, as need, as my fault. It used my faith, my forgiveness, and my compassion as weapons against me. And because I did not have language for it, I thought I was the problem. I thought I was too sensitive. Too needy. Too much. I was not. I was being managed. And the moment I understood that — everything changed."},
+  {t:'verse', v:'For God has not given us a spirit of fear, but of power and of love and of a sound mind.', ref:'2 Timothy 1:7'},
+  {t:'prompt', id:'p5a', label:'How has manipulation shown up in your relationship? Give a specific example of a time you left a conversation feeling confused or at fault when you started it feeling clear.', ph:'A specific time this happened was when... I went in feeling... I left feeling...'},
+  {t:'prompt', id:'p5b', label:'Has your faith, your compassion, or your past been used against you? How?', ph:'They used my ___ against me when...'},
+  {t:'prompt', id:'p5c', label:'What would you have to stop doing to remove access to the tools the manipulation uses? Be specific.', ph:'To remove access I would have to stop... and start...'},
+  {t:'prayer', v:'Lord, I release every manipulative pattern that has had access to my life. I reclaim my sound mind. I trust my own perception. I declare that I will no longer be controlled by guilt, fear, or false obligation. I am free to be honest. I am free to hold my ground. Amen.'},
+  {t:'encouragement', v:'You are not crazy. You are not too sensitive. What you experienced was real — and naming it is one of the most powerful things you can do. Your perception is valid. Your reality is valid. Trust yourself.'}
+]);
+
+addPage(6, "The Childhood Root", "Every adult wound has a childhood address.", [
+  {t:'body', v:"When I started tracing my adult patterns back to their roots, I ended up in my childhood every time. Not to blame anyone — but to understand myself. The way love was modeled to me, the way I learned to earn safety, the things I had to do to feel seen — they all became the blueprint my adult heart followed. Going back was hard. But it was the only way to understand why I kept choosing the same patterns over and over in different people. The root is where the healing has to happen."},
+  {t:'verse', v:'Search me, God, and know my heart; test me and know my anxious thoughts.', ref:'Psalm 139:23'},
+  {t:'prompt', id:'p6a', label:'What did love look like in your home growing up? Was it conditional or unconditional? Did you have to earn it?', ph:'Growing up, love looked like... It felt conditional when...'},
+  {t:'prompt', id:'p6b', label:'What did you have to do as a child to feel safe, seen, or accepted? Do you still do those same things in your adult relationships?', ph:'To feel safe as a child I had to... I still do this today by...'},
+  {t:'prompt', id:'p6c', label:'What did the little girl version of you most need to hear that she never heard? Write those words to her now.', ph:'Little girl, what I need you to know is...'},
+  {t:'encouragement', v:'Going back to your childhood is not about reopening wounds for no reason. It is about finding the root so you can pull it out — completely — and plant something healthy in its place. The little girl who did not get what she needed deserves healing. And you are the one who gets to give it to her.'}
+]);
+
+addPage(7, "The Generational Pattern", "It did not begin with you — but it will end with you.", [
+  {t:'body', v:"When I looked at the women in my family — really looked — I saw the same patterns moving through every generation like a river. The same silence. The same staying. The same forgiving without requiring change. Nobody chose it consciously. It was just what they knew, what they were given, what they passed down without realizing it. Until I decided I was not passing it down anymore. You cannot break a generational pattern by simply deciding not to repeat it. You have to heal the place inside you where it lives. That is what we are doing here."},
+  {t:'verse', v:'I will give you a new heart and put a new spirit in you.', ref:'Ezekiel 36:26'},
+  {t:'prompt', id:'p7a', label:'Look at the women in your family. What patterns do you see repeating across generations in love, boundaries, and self-worth?', ph:'The patterns I see moving through my family are...'},
+  {t:'prompt', id:'p7b', label:'Which specific pattern are you most determined to end — for yourself and for the women who come after you?', ph:'The pattern I am ending is...'},
+  {t:'prompt', id:'p7c', label:'Write the legacy you want to leave in three sentences. Bold. Specific. Yours.', ph:'The legacy I am leaving is...'},
+  {t:'prayer', v:'Lord, I stand in the gap for my bloodline. I release every generational pattern of pain, silence, and love without boundaries that has moved through my family line. I declare that the chains end with me. What I break here is the inheritance I leave. A new legacy. Beginning now. Amen.'},
+  {t:'quote', v:'You are not your mother\u2019s story. You are not your grandmother\u2019s silence. You are the one who breaks the pattern.'}
+]);
+
+addPage(8, "The Hard Work of Forgiveness", "Forgiveness is your freedom — not their reward.", [
+  {t:'body', v:"I used to think forgiveness meant what happened was okay. That it meant I was letting them off the hook. That it meant they won. I was wrong about all of it. Forgiveness is not about them. It is not approval of what they did. It is not reconciliation. It is not permission to return. Forgiveness is the key that unlocks your own prison. It is the moment you stop letting their actions determine the condition of your heart. I forgave — not for them, but because I refused to carry the weight of what they did for one more day. And baby, the moment I did — I could breathe again."},
+  {t:'verse', v:'Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you.', ref:'Colossians 3:13'},
+  {t:'prompt', id:'p8a', label:'What specific thing is hardest for you to forgive — and why? Write it out completely.', ph:'The hardest thing to forgive is... because...'},
+  {t:'prompt', id:'p8b', label:'What have you believed forgiveness means that has made you resist it? What does it actually mean?', ph:'I thought forgiveness meant... But I now understand it actually means...'},
+  {t:'prompt', id:'p8c', label:'Write yourself a complete forgiveness letter. Forgive yourself for staying, for ignoring red flags, for giving what was not honored. Mean every word.', ph:'[Your name], I completely forgive you for... You were doing the best you could with what you knew. You are not that woman anymore.'},
+  {t:'encouragement', v:'The hardest forgiveness is always the one you owe yourself. You have been so generous with grace toward everyone else. Now it is your turn. You deserve the same mercy you have given away so freely. You are not your worst moments. Keep going.'}
+]);
+
+addPage(9, "What Love Is Not", "You have been sold a counterfeit — and it is time to know the difference.", [
+  {t:'body', v:"Someone taught me that love looks like suffering. I do not know exactly when it happened — maybe it was what I saw growing up, maybe it was what I experienced in early relationships, maybe it was just something I absorbed from a world that romanticizes pain. But I believed for a very long time that love meant staying no matter what, absorbing what was unacceptable, making myself smaller so someone else could feel bigger. That is not love. That is trauma bonding wearing a love costume. And once I saw it clearly, I could never accept that version again."},
+  {t:'verse', v:'Love is patient, love is kind. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs.', ref:'1 Corinthians 13:4-5'},
+  {t:'prompt', id:'p9a', label:'What did someone teach you love looks like — through their actions or what you watched? How did that shape what you have accepted?', ph:'I was taught love looks like... This shaped me by making me accept...'},
+  {t:'prompt', id:'p9b', label:'Using 1 Corinthians 13 as your standard, write what real love should feel like in YOUR daily life. Make it specific and personal.', ph:'Real love in my daily life would feel like... I would know it was real because...'},
+  {t:'quote', v:'You are not asking for too much. You are in the wrong place. The right love will not make you feel like a burden for needing it.'}
+]);
+
+addPage(10, "Boundaries Are Not Walls", "Wisdom with a fence around it — and you have every right to build one.", [
+  {t:'body', v:"I used to think setting a boundary meant I was being mean. That I was giving up on someone. I was wrong. Boundaries are not walls. Walls keep everyone out. Boundaries let the right things in and keep the wrong things out. And here is what I learned from living it — the people who got the most upset when I started setting boundaries were the exact people who had been benefiting from me not having any. Their discomfort with my boundary was not evidence I had done something wrong. It was evidence the boundary was necessary. And yours is too."},
+  {t:'verse', v:'Above all else, guard your heart, for everything you do flows from it.', ref:'Proverbs 4:23'},
+  {t:'prompt', id:'p10a', label:'What is the one boundary you have needed to set the longest but have been most afraid to hold? Write it in one clear sentence.', ph:'The boundary I need to set is...'},
+  {t:'prompt', id:'p10b', label:'What has stopped you from setting it? Name the fear or the guilt specifically.', ph:'What has stopped me is... I have been afraid that...'},
+  {t:'prompt', id:'p10c', label:'What will you do if this boundary is not respected? Write the consequence — firm, loving, non-negotiable.', ph:'If this boundary is crossed, I will...'},
+  {t:'prayer', v:'Lord, give me the courage to hold this boundary without apology. Amen.'},
+  {t:'encouragement', v:'Holding a boundary for the first time will feel like you are doing something wrong because your nervous system has been trained to keep the peace at any cost. That feeling is not truth. That feeling is old programming being updated. Hold the line. You are not being cruel. You are being wise.'}
+]);
+
+addPage(11, "The Honest Conversation", "The one you have rehearsed a hundred times and never said out loud.", [
+  {t:'body', v:"There is a conversation I avoided for way too long. I rehearsed it in the shower. I drafted it in my head at 2am. I started it and stopped it a thousand times. And every time I did not have it, I handed that person more time and access they had not earned. The moment I finally had it — the moment I said the true thing out loud — something in me that had been held hostage was finally released. Not because of how they responded. Because of who I became in the moment of saying it."},
+  {t:'verse', v:'Speaking the truth in love, we will grow to become in every way the mature body of him who is the head.', ref:'Ephesians 4:15'},
+  {t:'prompt', id:'p11a', label:'Write the honest conversation you have been avoiding. Not a polished speech — just your truth. What do you need them to know?', ph:'What I have never been able to say is...'},
+  {t:'prompt', id:'p11b', label:'What outcome are you most afraid of — and what would you do if that outcome actually happened?', ph:'I am most afraid that... If that happened, I would...'},
+  {t:'prompt', id:'p11c', label:'Write your opening line — the first sentence you will say. Practice it here until it feels true coming out of you.', ph:'I will begin by saying...'},
+  {t:'prayer', v:'Lord, let this conversation be led by Your Spirit — not my fear. Give me words that heal. Soften both hearts. Let Your truth be the standard. Whatever the outcome — let Your will be done. I trust You with the result. Amen.'}
+]);
+
+addPage(12, "Healing Is Hard. Baby, It's Worth It.", "It feels like reliving the trauma. Do it anyway.", [
+  {t:'body', v:"Nobody told me healing would feel like going backward. That some days the process would hurt more than the original wound. That I would think I was done with something and then be right back there. What I know now — from living it, not studying it — is that the reliving is not punishment. It is release. Every time the pain surfaces, it is leaving. Every hard moment of the healing process is a moment you are getting something back. Your peace. Your clarity. Your self."},
+  {t:'verse', v:'Weeping may endure for a night, but joy comes in the morning.', ref:'Psalm 30:5'},
+  {t:'prompt', id:'p12a', label:'What is the hardest part of this healing process for you right now? What does it feel like in your body, your mind, your spirit?', ph:'The hardest part right now is... It feels like...'},
+  {t:'prompt', id:'p12b', label:'Describe a moment when you could feel the healing working — even slightly. What shifted?', ph:'I could feel the healing when...'},
+  {t:'prompt', id:'p12c', label:'Write yourself a note for the next time healing gets hard — from the wiser version of you who has already been through this moment.', ph:'When healing gets hard, remember this:...'},
+  {t:'quote', v:'The reliving is not punishment. It is the last time that pain gets to have power over you.'},
+  {t:'encouragement', v:'You are not falling apart. You are falling together. Cry it out. Write it out. Pray it out. And then take one more step forward. That is all you need to do today.'}
+]);
+
+addPage(13, "Let Go of All That Pain", "What you refuse to feel, you are forced to carry.", [
+  {t:'body', v:"I held onto my pain so long I forgot it was even there. It became part of how I functioned — this undercurrent of hurt that shaped every decision I made. Until the day I stopped managing it and actually let myself feel it. All of it. The anger, the grief, the love that went unreturned, the years I cannot get back. And then — in the most powerful prayer I have ever prayed — I handed it all over. Not managed. Not processed. Handed over. Completely."},
+  {t:'verse', v:'Cast all your anxiety on him because he cares for you.', ref:'1 Peter 5:7'},
+  {t:'prompt', id:'p13a', label:'Write out everything you are releasing right now. Every name. Every wound. Every piece of pain you have been holding. Do not hold anything back.', ph:'I release... I release... I release...'},
+  {t:'prompt', id:'p13b', label:'Now write: "I give all of this to God. It is no longer mine to carry. I am free." Sign your name and date it.', ph:'I give all of this to God. It is no longer mine to carry. I am free. Signed:'},
+  {t:'prompt', id:'p13c', label:'What does your life look like with that weight gone? Write the freedom in present tense — as if it is already true.', ph:'Without that weight I am... I feel... I can finally...'},
+  {t:'prayer', v:'Lord, I put it all down right now. Every name. Every wound. Every unanswered question. I place it in Your hands. Take it from me. In its place, give me peace. Give me purpose. Give me the freedom You already purchased. Amen.'}
+]);
+
+addPage(14, "Who You Are Without Them", "She has been in a waiting room for too long. It is time to meet her.", [
+  {t:'body', v:"When I finally got enough space from the relationship and the pain, I realized I did not know myself very well. Not because I lacked depth. But because so much of my identity had been organized around someone else that my own dreams, preferences, and needs had been sitting in a waiting room for years. Rediscovering myself was one of the most unexpected gifts of healing. The woman on the other side of this is someone you have not fully met yet. She is extraordinary."},
+  {t:'verse', v:'For you are a chosen people, a royal priesthood, a holy nation, God\u2019s special possession.', ref:'1 Peter 2:9'},
+  {t:'prompt', id:'p14a', label:'Who were you before this relationship or this pain? What did you love, dream about, and believe about yourself?', ph:'Before all of this I was someone who... I used to love... I used to believe...'},
+  {t:'prompt', id:'p14b', label:'Write 10 true things about yourself that have nothing to do with this person or this pain.', ph:'1. I am... 2. I love... 3. I am good at... 4. I value... 5. I dream of... 6. I am known for... 7. I believe... 8. I feel alive when... 9. I want... 10. I am...'},
+  {t:'encouragement', v:'You are going to surprise yourself with who you are on the other side of this. She was always there. She just needed room to breathe. Give her that room.'}
+]);
+
+/* MIDPOINT PAGE 15 */
+PAGES.push({
+  type:'content', section:'Page 15 · Midpoint', num:15, total:30,
+  title:"Look How Far You've Come",
+  subtitle:'Halfway through. Stop. Breathe. Look back.',
+  blocks:[
+    {t:'body', v:'You are halfway through this journal. That is not a small thing. Most people start journals and never make it to page 15. You did. Go back and read what you wrote on the very first page — before any of this processing, before any of these prayers. See who that woman was. And see who you are becoming.'},
+    {t:'encouragement', v:'I am so proud of you. Not for being perfect. Not for having it all figured out. For showing up. For writing the hard things. For praying when you did not feel like it. For staying in this journal when it would have been easier to close it and go back to what was comfortable. That takes courage most people never find. You found it.'},
+    {t:'prompt', id:'p15a', label:'Go back and read your very first journal entry. What do you notice about who you were then compared to who you are right now — even 14 pages in?', ph:'When I read my first entry, I notice that... The difference between then and now is...'},
+    {t:'prompt', id:'p15b', label:'What is the single most important thing you have learned or felt or released in the first half of this journal?', ph:'The most important thing so far has been...'},
+    {t:'freedomgauge', id:'freedom-mid', label:'Update your freedom number. On page one you wrote a number between 1–10 for how free you felt. What is your number now — and what changed?'},
+    {t:'checklist', id:'chkmid', items:[
+      'I have named the soul tie in my life',
+      'I understand the difference between being wanted and needed',
+      'I have recognized at least one sign of manipulation in my experience',
+      'I have identified a generational pattern I am determined to end',
+      'I have chosen to forgive — even if I don\u2019t feel it fully yet',
+      'I have named at least one boundary I need to hold',
+      'I have written things in this journal I have never said out loud before',
+      'I believe my healing is possible — even on the hardest days'
+    ]},
+    {t:'verse', v:'Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.', ref:'Galatians 6:9'}
+  ]
+});
+
+addPage(16, "Your Identity in God", "Your worth was never theirs to determine.", [
+  {t:'body', v:"My identity got tangled up in what people thought of me. What they chose. Whether they stayed. Whether they treated me well. My sense of who I was rose and fell based on how someone else was treating me on any given day. Until I understood something that changed everything: my identity was never supposed to come from a person. It was settled before I took my first breath. I was chosen, set apart, called, and loved — before anyone had the chance to accept or reject me."},
+  {t:'verse', v:'For you are a chosen people, a royal priesthood, a holy nation, God\u2019s special possession, that you may declare the praises of him who called you out of darkness into his wonderful light.', ref:'1 Peter 2:9'},
+  {t:'prompt', id:'p16a', label:'Write 10 "I am" declarations based on what you believe God says about you — not what this relationship or this pain has told you about yourself.', ph:'I am chosen. I am loved. I am worthy. I am called. I am...'},
+  {t:'prompt', id:'p16b', label:'What lie about your identity has this relationship reinforced? Write the lie — and then write the truth that replaces it.', ph:'The lie was: I am... The truth is: I am...'},
+  {t:'quote', v:'My worth is not determined by who chose me or who left. I was chosen before the foundation of the world. That is my identity. That is enough.'}
+]);
+
+addPage(17, "Breaking Every Chain", "Name them. Release them. Walk free.", [
+  {t:'body', v:"The day I spoke my freedom declaration out loud — not whispered, not thought, but spoken with my actual voice — something broke. I felt it. The chains that had been on me for years — the soul ties, the generational patterns, the lies about my worth, the fear of being alone — they lost their grip in that moment. Not because my circumstances had changed. Because I had changed. Your declaration has the same power. Say it out loud. Believe it even before you feel it. The feeling follows the declaration."},
+  {t:'verse', v:'It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery.', ref:'Galatians 5:1'},
+  {t:'prompt', id:'p17a', label:'Name every chain specifically. Write each one as a declaration: "I release the chain of ___." Make this list as long as it needs to be.', ph:'I release the chain of... I release the chain of... I release the chain of...'},
+  {t:'prompt', id:'p17b', label:'Now write your personal Freedom Declaration. In your own voice. Bold, specific, and completely yours.', ph:'I declare that I am free from... I declare that I will no longer... I declare that I am...'},
+  {t:'prayer', v:'Lord, I declare that every chain over my life is broken today. Every soul tie is severed. Every generational pattern is cancelled. Every lie about my worth is renounced. I am free — in my mind, in my heart, in my spirit. And I will not go back. Amen.'}
+]);
+
+addPage(18, "Your Bloodline Is Waiting on You", "It is impossible to live a purposeful life without healing first.", [
+  {t:'body', v:"This is the page that changed everything for me — the moment I understood that my healing was not just for me. The women who came before me carried their pain because they had no tools to set it down. They loved the best they could with what they had. But the patterns they carried got handed down — quietly, unintentionally, powerfully — to me. And I was about to hand them down to the next generation too. Until I decided: not me. The chains end here."},
+  {t:'verse', v:'A good person leaves an inheritance for their children\u2019s children.', ref:'Proverbs 13:22'},
+  {t:'prompt', id:'p18a', label:'Who in your bloodline — biological or spiritual — is waiting for the healing you are doing right now? Name them. See their faces.', ph:'The people waiting for my healing are...'},
+  {t:'prompt', id:'p18b', label:'What specific pattern are you ending — right now, on this page — so they never have to carry it?', ph:'I am ending the pattern of... so that they never have to...'},
+  {t:'prompt', id:'p18c', label:'Write a letter to the daughters — biological or spiritual — who will inherit your healed legacy. Tell them what you broke so they could be free.', ph:'Dear daughters, I broke these chains for you... You will never have to... Because I chose to...'},
+  {t:'quote', v:'It is impossible to live a purposeful life without healing first. Your bloodline is waiting on you. Do not keep them waiting.'}
+]);
+
+addPage(19, "Purpose in the Pain", "There is meaning in what tried to destroy you.", [
+  {t:'body', v:"I used to be ashamed of everything I went through. Now I am grateful for all of it — not because it did not hurt, but because it made me exactly who I needed to be. No degree in therapy or psychology gave me what suffering gave me. Suffering taught me what works and what does not. It taught me how to sit with someone in the dark because I had been there myself. Your pain has a purpose. And the purpose is always bigger than you."},
+  {t:'verse', v:'And we know that in all things God works for the good of those who love him, who have been called according to his purpose.', ref:'Romans 8:28'},
+  {t:'prompt', id:'p19a', label:'What has your pain taught you that nothing else could have? Write the lessons — even the most expensive ones.', ph:'My pain taught me... It showed me... It gave me the ability to...'},
+  {t:'prompt', id:'p19b', label:'Who is the specific woman you feel prepared to reach through your story? Where is she right now? What does she need?', ph:'The woman I am being prepared to reach is... She needs someone who...'},
+  {t:'encouragement', v:'Nothing you went through was meaningless. Not one sleepless night. Not one prayer that felt unanswered. Not one tear. Your pain is not a waste. It is a message. And the world is waiting to hear it.'}
+]);
+
+addPage(20, "Build From the Ruins", "What tried to destroy you becomes the foundation of what you build.", [
+  {t:'body', v:"Everything that tried to take me out became the material I built with. The relationships that broke me gave me compassion I cannot manufacture. The manipulation I survived gave me discernment I use every day. The generational patterns I broke gave me a legacy I am proud of. The healing — hard as it was — gave me a testimony that nobody can argue with. God does not waste ruins. He takes what was destroyed and builds something so beautiful from it that people cannot explain it without mentioning His name."},
+  {t:'verse', v:'See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.', ref:'Isaiah 43:19'},
+  {t:'prompt', id:'p20a', label:'What can you build from the ruins of what tried to destroy you? What ministry, message, or movement lives inside your story?', ph:'From the ruins of what tried to destroy me, I can build...'},
+  {t:'prompt', id:'p20b', label:'What does the fruitful life you were designed for actually look like — specifically, in detail, in your daily reality?', ph:'My fruitful life looks like... In the morning I... My relationships are... I feel... I am doing...'}
+]);
+
+addPage(21, "Boundaries Revisited", "Check in — are you holding what you said you would hold?", [
+  {t:'body', v:"Boundaries are not set once and done. They have to be tended. Life will test them. People will push them. Your own discomfort will tempt you to lower them. Coming back to check on your boundaries is not weakness — it is maintenance. And maintenance is what keeps freedom from becoming a memory instead of a reality."},
+  {t:'verse', v:'Be on your guard; stand firm in the faith; be courageous; be strong.', ref:'1 Corinthians 16:13'},
+  {t:'prompt', id:'p21a', label:'Look back at the boundary you wrote on Page 10. Have you held it? What happened when you tried? What needs adjusting?', ph:'When I tried to hold the boundary, what happened was... I need to adjust...'},
+  {t:'prompt', id:'p21b', label:'Is there a new boundary that has emerged through this journal that you need to name and commit to?', ph:'A new boundary I need to set is...'},
+  {t:'encouragement', v:'Every time you hold a boundary and the world does not end, your nervous system learns that it is safe to have limits. You are retraining yourself in real time. It gets easier. Not comfortable, but easier. Keep holding the line.'}
+]);
+
+addPage(22, "Speaking Your Truth", "Your voice is your freedom — use it.", [
+  {t:'body', v:"Silence kept me captive longer than any person ever could. Because silence is something I chose. Every time I swallowed my truth to keep the peace, I handed over a piece of my freedom. Your voice is not a threat. It is not too much. It is not something you need to apologize for or soften beyond recognition. Your voice — used honestly, in love, without apology — is one of the most powerful tools you have. Use it."},
+  {t:'verse', v:'For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.', ref:'2 Timothy 1:7'},
+  {t:'prompt', id:'p22a', label:'What truth have you been swallowing to keep the peace — in this relationship or in your life overall? Write it here and then commit to speaking it.', ph:'The truth I have been swallowing is... I commit to speaking it by...'},
+  {t:'prompt', id:'p22b', label:'Write the message you believe is inside you that the world needs to hear. In your voice. Unfiltered.', ph:'The message inside me that the world needs to hear is...'}
+]);
+
+addPage(23, "The New You", "She is not a fixed version of the old you. She is entirely new.", [
+  {t:'body', v:"The woman who finishes this journal is not the same woman who started it. She cannot be. You have gone to places in yourself that most people never go. You have said things on these pages that you have never said out loud. You have prayed prayers you were afraid to pray and declared things you did not yet fully believe. That changes a person. Permanently. The new you is not a patched-up version of the old. She is someone being built from the very first page."},
+  {t:'verse', v:'Therefore, if anyone is in Christ, the new creation has come: the old has gone, the new is here!', ref:'2 Corinthians 5:17'},
+  {t:'prompt', id:'p23a', label:'Describe the new you in detail. How does she move through the world? What does she accept and not accept? How does she love? How does she hold herself?', ph:'The new me is a woman who... She accepts... She does not accept... She loves by... She holds herself with...'},
+  {t:'prompt', id:'p23b', label:'What will you do differently from today forward that the old you would not have done?', ph:'From today I will... I will no longer... I will begin...'}
+]);
+
+addPage(24, "A Heart of Gratitude", "Even in the pain — there is always something to be thankful for.", [
+  {t:'body', v:"Gratitude in the middle of healing is one of the most powerful weapons you have. Not toxic positivity. Not pretending everything is fine. Real gratitude — the kind that says, I do not understand all of this but I am thankful I am still here. I am thankful for the healing that is happening even when I cannot feel it. I am thankful for the woman I am becoming. That kind of gratitude is a declaration of faith. And faith moves things."},
+  {t:'verse', v:'Give thanks to the Lord, for he is good; his love endures forever.', ref:'Psalm 107:1'},
+  {t:'prompt', id:'p24a', label:'Write 20 things you are grateful for — include things about your healing, things about who you are becoming, and things about this season, even the hard parts.', ph:'I am grateful for: 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. 11. 12. 13. 14. 15. 16. 17. 18. 19. 20.'},
+  {t:'encouragement', v:'Read your gratitude list out loud. Every item on it is evidence that you have been carried through this journey — even the painful parts. You are more cared for than you know. You are more loved than any person has ever demonstrated. Receive it.'}
+]);
+
+addPage(25, "Drawing Others to Light", "Your healing is never just for you.", [
+  {t:'body', v:"The woman who needs what you carry is already in your life. She might be your best friend who keeps going back to someone who hurts her. Your sister who confuses being needed with being loved. Your coworker who has never heard the words soul tie in her life but is living inside one right now. She does not need a degree from you. She needs someone who went through it and came back to show her the door. That someone — the one who went first — is you."},
+  {t:'verse', v:'He comforts us in all our troubles, so that we can comfort those in any trouble with the comfort we ourselves receive.', ref:'2 Corinthians 1:4'},
+  {t:'prompt', id:'p25a', label:'Who in your life right now is where you used to be? What do they need that you now have to give?', ph:'The woman in my life who needs this is... What she needs that I can give is...'},
+  {t:'prompt', id:'p25b', label:'Write a letter to the next woman who picks up this journal after you. Tell her what you want her to know before she begins.', ph:'Dear Sister, before you begin I want you to know...'}
+]);
+
+addPage(26, "Your Legacy", "What you leave behind is greater than what you survived.", [
+  {t:'body', v:"I used to think legacy was something you built after you had everything together. I was wrong. Legacy is built in the middle of the mess — in the decisions you make while you are still healing, while you are still figuring it out, while you are still imperfect and in process. The moment you chose to heal was a legacy moment. The moment you set that boundary was a legacy moment. The moment you opened this journal was a legacy moment. You are building it right now, one honest page at a time."},
+  {t:'verse', v:'She is clothed with strength and dignity; she can laugh at the days to come.', ref:'Proverbs 31:25'},
+  {t:'prompt', id:'p26a', label:'Write your legacy statement — bold, specific, completely yours. What do you want the women who come after you to inherit?', ph:'My legacy is... The women after me will inherit...'},
+  {t:'prompt', id:'p26b', label:'What are three specific things you will do in the next 30 days to actively build that legacy?', ph:'In the next 30 days I will: 1. 2. 3.'}
+]);
+
+addPage(27, "The Freedom Declaration", "Say this out loud. Mean every word.", [
+  {t:'body', v:"Declarations spoken out loud have a different power than words kept in your head. When I began speaking my freedom out loud, not thinking it, speaking it, something around me began to shift. Not because of magic. Because of faith. You are free. Say it. Out loud. Until your spirit believes what your mouth is saying."},
+  {t:'quote', v:'I am free. Every chain is broken. Every soul tie is severed. Every generational pattern ends with me. I know the difference between being wanted and needed. I will not be manipulated. I will not shrink. I will not return. Healing is hard — and baby, it is worth it. My lifeline is secure. My bloodline is free. There is purpose in my pain. Now I am going to change the world.'},
+  {t:'prompt', id:'p27a', label:'Write your own personal freedom declaration — specific to your life, your journey, your chains that are now broken. Make it bold. Make it yours.', ph:'I declare that I am free from... I declare that I will... I declare that my life will now...'},
+  {t:'prayer', v:'Lord, I receive the freedom You purchased for me. I declare it over my life, my relationships, my bloodline, and my future. Let everything that tried to destroy me become fuel for the purpose You placed in me. I am ready. Amen.'}
+]);
+
+addPage(28, "Look How Far You Have Come", "This is not the finish line. This is the evidence.", [
+  {t:'body', v:"You are almost at the end of this journal. Before you write on this page, go back and read everything. Every entry. Every prayer. Every declaration. See the journey. See the woman who started on page one and see who is sitting here now. They are not the same woman. You did that."},
+  {t:'prompt', id:'p28a', label:'What is the most significant thing that changed in you from Page 1 to this page?', ph:'The most significant change in me is...'},
+  {t:'freedomgauge', id:'freedom-final', label:'Update your freedom number one final time. What is it now — and what made the difference?'},
+  {t:'checklist', id:'chkfinal', items:[
+    'I have released the soul tie — in prayer, in declaration, and in decision',
+    'I know the difference between being wanted and needed — and I choose wanted',
+    'I have recognized and named the manipulation in my life',
+    'I have broken a generational pattern — it ends with me',
+    'I have forgiven — myself and others',
+    'I have held or am ready to hold my boundary',
+    'I have released the pain and chosen to build from the ruins',
+    'I know my pain has purpose — and I am ready to use it',
+    'I am not the same woman who opened this journal',
+    'I am not going back'
+  ]},
+  {t:'encouragement', v:'Look at those checks. Every single one of those is something you did. Nobody handed it to you. You fought for it on every page of this journal. You are not going back. And the world is about to feel the difference.'}
+]);
+
+addPage(29, "Your Testimony", "Write it. Own it. It is someone else's lifeline.", [
+  {t:'body', v:"Your testimony is the most powerful thing you own. Not your degree. Not your credentials. Not your perfectly packaged story. Your raw, honest, survived-it-and-came-out-the-other-side testimony. The woman who needs to hear it is already waiting. She is in the dark you just walked out of. And the only thing that will reach her is someone who was there — someone who can say, I know. I was there. And there is a way out. That someone is you."},
+  {t:'verse', v:'They triumphed over him by the blood of the Lamb and by the word of their testimony.', ref:'Revelation 12:11'},
+  {t:'prompt', id:'p29a', label:'Write your complete testimony — where you were when you started, what you went through, what changed, and who you are now. Write it as if you are speaking directly to the woman who needs it most.', ph:'When I started this journal I was a woman who... I went through... I discovered... I broke free from... And now I am a woman who...'},
+  {t:'prompt', id:'p29b', label:'What is the one sentence from your entire healing journey that you want the world to hear?', ph:'The one sentence I want the world to hear is...'}
+]);
+
+addPage(30, "Now Go and Change the World", "This is not the end. This is the beginning of everything.", [
+  {t:'body', v:"You made it to the last page. I need you to feel the weight of that — because it means you did not quit when it got hard. You did not close this journal when the questions got uncomfortable. You showed up, on every single page, for yourself. That is one of the most extraordinary things a human being can do."},
+  {t:'body', v:"You do not have a degree in therapy or psychology. Neither do I. But you have something more powerful. You have a story. You have scars that healed. You have pages of honest entries that prove you did the work. You have a testimony that nobody can argue with because you lived it."},
+  {t:'body', v:"Healing was hard. It felt like reliving the trauma all over again. And baby, it was worth it. The woman who is sitting here on page 30 is not the same woman who opened page one. She is freer. She is clearer. She is more herself than she has been in a very long time. And she is ready."},
+  {t:'quote', v:'Let go of all that pain. Build from what tried to destroy you. There is purpose in every piece of it. Your lifeline is secure. Your bloodline is free. And the world is waiting. Now go. And change the world.'},
+  {t:'prompt', id:'p30final', label:'Write your final entry. The full picture — who you were, what you went through, who you are now, and what you are going to do with all of it.', ph:'I started this journal as a woman who... I am ending it as a woman who... I am going to...'},
+  {t:'sign', id:'p30sign', label:'Sign your name below. Date it. This is your declaration that you are healed, you are free, and you are going to go change the world.'},
+  {t:'verse', v:'Now to him who is able to do immeasurably more than all we ask or imagine, according to his power that is at work within us — to him be glory throughout all generations, for ever and ever!', ref:'Ephesians 3:20-21'}
+]);
+
+/* ---------------- STATE / STORAGE ---------------- */
+const STORE_KEY = 'bst_journal_v1';
+function loadStore(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(e){ return {}; } }
+function saveStore(s){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }catch(e){} }
+let store = loadStore();
+let current = store._current || 0;
+const gateAccepted = !!store._gateAccepted;
+if (!gateAccepted) current = 0; // always show gate first if not accepted
+
+const book = document.getElementById('book');
+
+function render(){
+  book.innerHTML = '';
+  const p = PAGES[current];
+
+  if (!store._gateAccepted && p.type !== 'gate'){
+    current = 0;
+  }
+  const page = PAGES[current];
+
+  if (page.type === 'gate') renderGate();
+  else if (page.type === 'cover') renderCover();
+  else renderContent(page);
+
+  store._current = current;
+  saveStore(store);
+}
+
+function topbar(labelText, pct){
+  const bar = document.createElement('div');
+  bar.className = 'topbar';
+  bar.innerHTML = `
+    <div class="progress-wrap">
+      <span class="progress-label">${labelText}</span>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <button class="resources-link" id="res-btn" type="button">Support &amp; Resources</button>
+  `;
+  return bar;
+}
+
+function overallPct(){
+  return Math.round((current / (PAGES.length-1)) * 100);
+}
+
+function attachResourcesBtn(){
+  const btn = document.getElementById('res-btn');
+  if (btn) btn.onclick = () => { store._returnTo = current; current = 0; store._forceGateView = true; saveStore(store); render(); };
+}
+
+/* ---------- GATE (disclaimer / crisis resources) ---------- */
+function renderGate(){
+  const wrap = document.createElement('div');
+  wrap.appendChild(topbar('Before You Begin', 0));
+
+  const gate = document.createElement('div');
+  gate.className = 'gate';
+  gate.innerHTML = `
+    <span class="eyebrow">Please Read First</span>
+    <h1>A Word Before You Begin</h1>
+    <div class="gate-box">
+      This journal was written by Dana Scott from her own lived experience, faith, and recovery — not from
+      clinical training. <strong>It is a space for reflection, prayer, and encouragement — not a replacement
+      for therapy, medical care, or professional mental health treatment.</strong> Some pages ask you to sit
+      with real pain, including past relationships, family patterns, and difficult memories. If a page brings
+      up more than feels manageable, it's okay to close the journal and reach out to a licensed counselor,
+      doctor, or someone you trust. That is not failure — that is wisdom, and this journal wants that for you too.
+    </div>
+    <div class="crisis-box">
+      <span class="tag">If you are in crisis right now</span>
+      If you are thinking about suicide or self-harm, or you are not safe, please stop and reach out immediately:
+      <br><br>
+      &bull; <strong>United States:</strong> Call or text <a href="tel:988">988</a> (Suicide &amp; Crisis Lifeline), available 24/7<br>
+      &bull; <strong>Crisis Text Line:</strong> Text HOME to <a href="sms:741741">741741</a><br>
+      &bull; <strong>Outside the U.S.:</strong> Please search "crisis line" plus your country name, or contact local emergency services<br>
+      &bull; If you are in immediate danger, call your local emergency number now.
+      <br><br>
+      You deserve real, immediate support — not just a journal page. Please reach out.
+    </div>
+    <label class="gate-check">
+      <input type="checkbox" id="gate-check">
+      <span>I understand this journal is a faith and reflection resource, not therapy or medical treatment, and I know where to find crisis support if I need it.</span>
+    </label>
+  `;
+  wrap.appendChild(gate);
+
+  const nav = document.createElement('div');
+  nav.className = 'navbar';
+  nav.innerHTML = `<div></div><button class="navbtn primary" id="begin-btn" disabled>Continue</button>`;
+  wrap.appendChild(nav);
+
+  book.appendChild(wrap);
+  attachResourcesBtn();
+
+  const chk = document.getElementById('gate-check');
+  const beginBtn = document.getElementById('begin-btn');
+  chk.checked = !!store._gateAccepted;
+  beginBtn.disabled = !chk.checked;
+  chk.onchange = () => { beginBtn.disabled = !chk.checked; };
+  beginBtn.onclick = () => {
+    store._gateAccepted = true;
+    saveStore(store);
+    current = store._forceGateView ? (store._returnTo || 1) : 1;
+    store._forceGateView = false;
+    render();
+  };
+}
+
+/* ---------- COVER ---------- */
+function renderCover(){
+  const wrap = document.createElement('div');
+  wrap.appendChild(topbar('Front Matter', overallPct()));
+
+  const cov = document.createElement('div');
+  cov.className = 'cover-wrap';
+  cov.innerHTML = `
+    <span class="cover-tag">Best-Selling Purpose-Driven Women's Journal</span>
+    <h1 class="cover-title">Breaking Soul Ties<br>to Live a Fruitful Life</h1>
+    <p class="cover-sub">Mental Health Advocate &middot; Real Life Experiences &middot; Faith &amp; Suffering Got Me Here</p>
+    <p class="cover-verse">&ldquo;It is for freedom that Christ has set us free. Stand firm, then.&rdquo; &mdash; Galatians 5:1</p>
+    <p class="cover-author">Dana Scott &mdash; Overcomer &middot; Survivor &middot; No Degree &middot; Real Life</p>
+  `;
+  wrap.appendChild(cov);
+
+  const nav = document.createElement('div');
+  nav.className = 'navbar';
+  nav.innerHTML = `<div></div><button class="navbtn primary" id="next-btn">Begin Your Journey &rarr;</button>`;
+  wrap.appendChild(nav);
+
+  book.appendChild(wrap);
+  attachResourcesBtn();
+  document.getElementById('next-btn').onclick = () => { current++; render(); };
+}
+
+/* ---------- CONTENT PAGE ---------- */
+function renderContent(page){
+  const wrap = document.createElement('div');
+  const label = page.num ? `Page ${page.num} of ${page.total || 30}` : page.section;
+  wrap.appendChild(topbar(label, overallPct()));
+
+  const div = document.createElement('div');
+  div.className = 'page';
+
+  let html = `<span class="eyebrow">${page.section}</span>
+    <h1 class="title">${page.title}</h1>
+    ${page.subtitle ? `<p class="subtitle">${page.subtitle}</p>` : ''}
+    <span class="signature">Overcomer &middot; Survivor &middot; Dana Scott</span>`;
+
+  page.blocks.forEach(b => {
+    if (b.t === 'body') html += `<p class="body-text">${b.v}</p>`;
+    else if (b.t === 'verse') html += `<div class="verse">${b.v}<span class="ref">${b.ref}</span></div>`;
+    else if (b.t === 'quote') html += `<div class="quote-block">${b.v}</div>`;
+    else if (b.t === 'encouragement') html += `<div class="encouragement"><span class="tag">Encouragement from Dana</span>${b.v}</div>`;
+    else if (b.t === 'prayer') html += `<div class="prayer"><span class="tag">Prayer</span><p>${b.v}</p></div>`;
+    else if (b.t === 'prompt') html += `<div class="prompt"><label>${b.label}</label><textarea id="${b.id}" placeholder="${b.ph || ''}"></textarea></div>`;
+    else if (b.t === 'checklist') {
+      html += `<div class="checklist">` + b.items.map((it,i) => `
+        <label class="check-item">
+          <input type="checkbox" data-chk="${b.id}_${i}">
+          <span>${it}</span>
+        </label>`).join('') + `</div>`;
+    }
+    else if (b.t === 'freedomgauge') {
+      html += `<div class="freedom-gauge">
+        <span class="flabel">${b.label}</span>
+        <div class="dots" data-gauge="${b.id}">
+          ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="dot" data-n="${n}">${n}</div>`).join('')}
+        </div>
+      </div>`;
+    }
+    else if (b.t === 'sign') {
+      html += `<div class="prompt"><label>${b.label}</label>
+        <div class="signline">
+          Signed: <input type="text" id="${b.id}_name" placeholder="Your name">
+          Date: <input type="text" id="${b.id}_date" placeholder="MM/DD/YYYY">
+        </div></div>`;
+    }
+  });
+
+  div.innerHTML = html;
+  wrap.appendChild(div);
+
+  const nav = document.createElement('div');
+  nav.className = 'navbar';
+  nav.innerHTML = `
+    <button class="navbtn ghost" id="prev-btn">&larr; Back</button>
+    <span class="saved-note">Saves automatically</span>
+    <button class="navbtn primary" id="next-btn">${current === PAGES.length-1 ? 'Finish' : 'Next \u2192'}</button>
+  `;
+  wrap.appendChild(nav);
+
+  book.appendChild(wrap);
+  attachResourcesBtn();
+
+  // wire inputs
+  page.blocks.forEach(b => {
+    if (b.t === 'prompt') {
+      const el = document.getElementById(b.id);
+      el.value = store[b.id] || '';
+      el.oninput = () => { store[b.id] = el.value; saveStore(store); };
+    }
+    if (b.t === 'sign') {
+      const n = document.getElementById(b.id+'_name'); const d = document.getElementById(b.id+'_date');
+      n.value = store[b.id+'_name'] || ''; d.value = store[b.id+'_date'] || '';
+      n.oninput = () => { store[b.id+'_name'] = n.value; saveStore(store); };
+      d.oninput = () => { store[b.id+'_date'] = d.value; saveStore(store); };
+    }
+    if (b.t === 'checklist') {
+      b.items.forEach((it,i) => {
+        const key = b.id+'_'+i;
+        const el = div.querySelector(`[data-chk="${key}"]`);
+        el.checked = !!store[key];
+        el.onchange = () => { store[key] = el.checked; saveStore(store); };
+      });
+    }
+    if (b.t === 'freedomgauge') {
+      const dotsWrap = div.querySelector(`[data-gauge="${b.id}"]`);
+      const dots = dotsWrap.querySelectorAll('.dot');
+      const setActive = (n) => dots.forEach(d => d.classList.toggle('active', Number(d.dataset.n) === n));
+      setActive(store[b.id] || 0);
+      dots.forEach(d => d.onclick = () => { store[b.id] = Number(d.dataset.n); saveStore(store); setActive(store[b.id]); });
+    }
+  });
+
+  document.getElementById('prev-btn').onclick = () => { if (current > 1){ current--; render(); window.scrollTo({top:0,behavior:'smooth'}); } else { current = 1; render(); } };
+  document.getElementById('next-btn').onclick = () => {
+    if (current < PAGES.length - 1) current++;
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+}
+
+render();
+</script>
+</body>
+</html>
